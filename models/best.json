@@ -1,0 +1,51 @@
+{
+  "sha256": "dd71e958e22e5f3873038e8e428fd486c64f6d70001e7d4e37588a517862c66d",
+  "title": "YOLO11n 安全帽佩戴模型",
+  "training_domain": "SHWD 安全帽与未戴帽头部",
+  "notice": "该模型已在 SHWD 独立测试集评估。截图底部文字在 0.25 阈值下仍可能误检；建议使用现场原图，并逐项核对检测框。",
+  "evaluation": {
+    "model": "runs/helmet_shwd_m1/weights/best.pt",
+    "model_sha256": "dd71e958e22e5f3873038e8e428fd486c64f6d70001e7d4e37588a517862c66d",
+    "data": "datasets/shwd/m1.yaml",
+    "split": "test",
+    "imgsz": 512,
+    "metrics": {
+      "metrics/precision(B)": 0.8865005038066827,
+      "metrics/recall(B)": 0.7664145471018295,
+      "metrics/mAP50(B)": 0.8522293773042401,
+      "metrics/mAP50-95(B)": 0.52739628325558,
+      "fitness": 0.52739628325558
+    },
+    "classes": {
+      "helmet": {
+        "precision": 0.9108969183124804,
+        "recall": 0.7847045728523673,
+        "mAP50": 0.8676986930681525,
+        "mAP50_95": 0.6509652570284018
+      },
+      "no_helmet": {
+        "precision": 0.8621040893008848,
+        "recall": 0.7481245213512917,
+        "mAP50": 0.8367600615403277,
+        "mAP50_95": 0.4038273094827578
+      }
+    },
+    "sample_image": "IMG_2377.PNG (local evaluation sample, not included in repository)",
+    "sample_note": "Visual comparison only; the image has no ground-truth annotations.",
+    "sample_observations": {
+      "input": "full original screenshot, no crop",
+      "imgsz": 640,
+      "conf_0.25": {
+        "helmet": 3,
+        "no_helmet": 2,
+        "known_false_positive": "Screenshot footer/text area, helmet score approximately 0.4755"
+      },
+      "conf_0.50": {
+        "helmet": 2,
+        "no_helmet": 2,
+        "visual_review": "Both helmet wearers and both unhelmeted heads correctly located; no extra boxes in this image."
+      },
+      "note": "Manual review of this single image does not certify other scenes; threshold 0.50 is a suggestion for this screenshot only."
+    }
+  }
+}

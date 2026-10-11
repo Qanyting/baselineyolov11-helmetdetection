@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import icon, records_table %}
+{% block title %}历史记录{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>历史记录</h1><p class="muted">回溯每次检测，原文件和结果都在这里。</p></div><a class="button primary" href="{{ url_for('detection.image') }}">{{ icon('upload') }}新建检测</a></div>
+<section class="history-panel history-full"><div class="history-toolbar"><nav class="tabs" aria-label="检测类型"><a class="{% if kind == 'all' %}active{% endif %}" href="{{ url_for('history.index') }}">全部记录</a><a class="{% if kind == 'image' %}active{% endif %}" href="{{ url_for('history.index', type='image') }}">图片</a><a class="{% if kind == 'video' %}active{% endif %}" href="{{ url_for('history.index', type='video') }}">视频</a></nav><span class="muted">共 {{ pagination.total }} 条记录</span></div>
+{% if pagination.items %}{{ records_table(pagination.items) }}{% else %}<div class="empty-state">{{ icon('history') }}<h3>还没有{{ '图片' if kind == 'image' else '视频' if kind == 'video' else '' }}检测记录</h3><p>上传文件开始检测，完成后会自动保存。</p><a class="button" href="{{ url_for('detection.video' if kind == 'video' else 'detection.image') }}">开始检测</a></div>{% endif %}
+{% if pagination.pages > 1 %}<nav class="pagination" aria-label="分页">{% if pagination.has_prev %}<a class="button" href="{{ url_for('history.index', page=pagination.prev_num, type=kind) }}">上一页</a>{% endif %}<span>第 {{ pagination.page }} / {{ pagination.pages }} 页</span>{% if pagination.has_next %}<a class="button" href="{{ url_for('history.index', page=pagination.next_num, type=kind) }}">下一页</a>{% endif %}</nav>{% endif %}
+</section>
+{% endblock %}

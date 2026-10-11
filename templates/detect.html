@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import icon %}
+{% set is_video = kind == 'video' %}
+{% block title %}{{ '视频' if is_video else '图片' }}检测{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>{{ '视频' if is_video else '图片' }}检测</h1><p class="muted">{{ '逐帧识别安全帽佩戴情况，生成可播放的标注视频。' if is_video else '上传现场图片，查看目标位置、类别和置信度。' }}</p></div><a class="subtle-link" href="{{ url_for('history.index') }}">{{ icon('history') }}查看历史记录</a></div>
+{% if is_video and not ffmpeg_ready %}<div class="flash error">视频检测需要 ffmpeg。请先安装 ffmpeg，再开始检测。</div>{% endif %}
+<div class="upload-layout">
+  <section class="upload-panel">
+    <form method="post" enctype="multipart/form-data" id="upload-form" data-kind="{{ kind }}" data-limit="{{ upload_limit_mb * 1024 * 1024 }}" data-ready="{{ 'true' if model_ready and (not is_video or ffmpeg_ready) else 'false' }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="panel-heading"><h2>上传{{ '视频' if is_video else '图片' }}</h2><span class="muted">单个文件 / 最大 {{ upload_limit_mb }} MB</span></div>
+      <label class="drop-zone" id="drop-zone" for="file"><input id="file" name="file" class="file-input" type="file" accept="{{ '.mp4,.mov,.avi,.mkv' if is_video else '.jpg,.jpeg,.png,.webp' }}" required aria-describedby="file-help upload-error"><span class="upload-symbol">{{ icon('upload') }}</span><strong>将{{ '视频' if is_video else '图片' }}拖到这里</strong><span>或 <b>点击选择文件</b></span><small id="file-help">{{ 'MP4 / MOV / AVI / MKV' if is_video else 'JPG / JPEG / PNG / WEBP' }}</small></label>
+      <p class="upload-error" id="upload-error" role="alert" hidden></p>
+      <div class="selected-file" id="selected-file" hidden><span class="file-info"><strong id="file-name"></strong><small id="file-size"></small></span><button type="button" id="remove-file" class="text-button">移除文件</button></div>
+      <div class="preview-frame" id="preview-frame" hidden>{% if is_video %}<video id="file-preview" controls preload="metadata"></video>{% else %}<img id="file-preview" alt="待检测图片预览">{% endif %}<p id="preview-message" class="muted" hidden>浏览器暂时无法预览此格式，仍可上传后检测。</p></div>
+      <div class="confidence-control"><label for="confidence">置信度阈值<small>这是预测分数门槛，不是模型准确率；越高越容易漏检</small></label><div class="range-group"><input id="confidence" type="range" name="confidence" min="0.05" max="0.95" step="0.05" value="{{ default_conf }}" aria-describedby="confidence-help"><output for="confidence" id="confidence-value">{{ '%.2f'|format(default_conf) }}</output></div></div>
+      <div class="confidence-help" id="confidence-help"><span>建议先从 0.25 测试，再结合原图调整。</span><button type="button" class="text-button" id="reset-confidence">恢复 0.25</button></div>
+      <p class="threshold-warning" id="threshold-warning" role="status" {% if default_conf < 0.7 %}hidden{% endif %}>当前阈值较高，可能过滤掉真实目标。检测数量为 0 不代表画面中没有目标。</p>
+      <div class="upload-footer"><span class="muted">原文件与检测结果将自动保存</span><button type="submit" id="detect-button" class="button primary" {% if not model_ready or (is_video and not ffmpeg_ready) %}disabled{% endif %}>{{ icon('check') }}开始检测</button></div>
+      <div class="processing-state" id="processing-state" role="status" aria-live="polite" hidden><span class="spinner"></span><div><strong>{{ '视频处理中，请勿重复提交' if is_video else '图片检测中…' }}</strong><p>请保持页面打开，完成后将自动显示结果。</p></div></div>
+      <noscript><p class="muted">选择文件后即可提交；文件预览和等待提示需要启用 JavaScript。</p></noscript>
+    </form>
+  </section>
+  <aside class="upload-guide"><h2>检测说明</h2><ol class="steps"><li><strong>选择文件</strong><p>支持{{ '常见视频格式，建议先用较短片段测试。' if is_video else '常见图片格式，请选择画面清晰的现场图片。' }}</p></li><li><strong>开始检测</strong><p>{{ '使用同一个模型逐帧推理，并转码为可在浏览器播放的 MP4。' if is_video else '模型自动识别目标，绘制类别、检测框与置信度。' }}</p></li><li><strong>查看与保存</strong><p>查看原始与标注结果，下载文件或在历史中再次打开。</p></li></ol>
+    <div class="guide-note"><h3>{{ '关于视频统计' if is_video else '关于检测结果' }}</h3><p>{{ '数量为各帧检测目标的累计值，同一人可能被多次计数，不代表唯一人员数量。' if is_video else '模型结果可能存在漏检或误检，请结合原图判断。没有识别到目标时，也会保存完整记录。' }}</p>{% if is_video %}<small>当前上限：{{ config.MAX_VIDEO_SECONDS }} 秒 / {{ config.MAX_VIDEO_FRAMES }} 帧</small>{% endif %}</div>
+    {% if not is_video %}<p class="screenshot-help">测试社交应用截图时，建议优先使用原始现场照片，或先裁掉顶部栏、文字和按钮，减少背景干扰。</p>{% endif %}
+    <div class="guide-model"><span class="status {% if not model_ready %}unavailable{% endif %}"><i></i>{{ '模型已加载' if model_ready else '模型未就绪' }}</span><p>{{ model_classes.values()|join(' / ') if model_ready else '请配置训练权重后重启' }}</p>{% if model_metadata.get('training_domain') %}<p>训练场景：{{ model_metadata.training_domain }}</p>{% endif %}</div>
+  </aside>
+</div>
+{% endblock %}

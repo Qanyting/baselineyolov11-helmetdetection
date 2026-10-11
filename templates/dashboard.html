@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import icon, records_table, helmet_art %}
+{% block title %}工作台{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>你好，{{ current_user.username }}</h1><p class="muted">从一张图片开始，或检查一段视频。</p></div><span class="heading-note">所有检测记录仅对你可见</span></div>
+<section class="welcome-panel"><div class="welcome-copy"><span class="soft-tag">安全帽佩戴检测</span><h2>看见现场，<br>留存检测结果。</h2><p>上传图片或视频，自动标注目标与置信度。<br>原始文件和检测结果，一起保存到你的历史记录。</p><a class="button primary" href="{{ url_for('detection.image') }}">{{ icon('image') }}开始图片检测</a></div><div class="welcome-visual">{{ helmet_art() }}<span class="illustration-caption">检测示意</span></div></section>
+<section class="stats-strip" aria-label="检测统计"><div><span>累计检测</span><strong>{{ counts.get('image', 0) + counts.get('video', 0) }}<small>次</small></strong></div><div><span>图片检测</span><strong>{{ counts.get('image', 0) }}<small>次</small></strong></div><div><span>视频检测</span><strong>{{ counts.get('video', 0) }}<small>次</small></strong></div><div class="stats-model"><span>当前模型</span><strong>YOLO11</strong><small>{{ model_classes.values()|join(' / ') if model_ready else '等待加载权重' }}</small></div></section>
+<div class="section-heading"><h2>选择检测方式</h2><span class="muted">文件上传后保存在本机</span></div>
+<div class="detection-cards"><a class="detection-card" href="{{ url_for('detection.image') }}"><span class="tile-icon">{{ icon('image') }}</span><div><h3>图片检测</h3><p>单张图片，快速查看安全帽检测结果。</p><small>JPG / PNG / WEBP</small></div>{{ icon('chevron', 'card-chevron') }}</a><a class="detection-card" href="{{ url_for('detection.video') }}"><span class="tile-icon blue">{{ icon('video') }}</span><div><h3>视频检测</h3><p>逐帧分析视频，生成带标注的结果视频。</p><small>MP4 / MOV / AVI / MKV</small></div>{{ icon('chevron', 'card-chevron') }}</a></div>
+<section class="history-panel"><div class="section-heading"><h2>最近检测</h2><a href="{{ url_for('history.index') }}">查看全部{{ icon('chevron') }}</a></div>{% if recent %}{{ records_table(recent) }}{% else %}<div class="empty-state">{{ icon('history') }}<h3>还没有检测记录</h3><p>完成第一次检测后，结果会保存在这里。</p><a class="button" href="{{ url_for('detection.image') }}">上传第一张图片</a></div>{% endif %}</section>
+{% endblock %}

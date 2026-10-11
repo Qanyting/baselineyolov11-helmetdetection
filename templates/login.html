@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}登录{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <span class="auth-small-brand">Helmet Lab / 欢迎回来</span>
+  <h1>登录工作台</h1><p class="muted">检测图片与视频，留存每一次结果。</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="next" value="{{ next_url }}">
+    <label for="username">用户名</label><input id="username" name="username" value="{{ username }}" autocomplete="username" required maxlength="32" autofocus>
+    <label for="password">密码</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128">
+    <label class="checkbox"><input type="checkbox" name="remember">记住我，30 天内保持登录</label>
+    <button type="submit" class="button primary full">登录</button>
+  </form>
+  <p class="auth-switch">还没有账户？<a href="{{ url_for('auth.register') }}">创建账户</a></p>
+</section>
+{% endblock %}

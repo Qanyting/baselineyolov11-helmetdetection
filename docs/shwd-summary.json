@@ -1,0 +1,279 @@
+{
+  "source": "https://github.com/njvisionpower/Safety-Helmet-Wearing-Dataset",
+  "download": "https://drive.usercontent.google.com/download?id=1qWm7rrwvjAWs1slymbrLaCf7Q-wnGLEX&export=download&confirm=t",
+  "archive_sha256": "2f6c5c347b778271bc8b27c2d61b731fc5fb8cdb4f45fce583dd2f82e6a46401",
+  "seed": 42,
+  "source_images": 7581,
+  "unique_images": 7541,
+  "excluded_images": [
+    {
+      "id": "000377",
+      "reason": "Source XML has three incorrect dog labels on helmet regions; exclude the whole collage rather than guess corrected labels."
+    }
+  ],
+  "jpeg_end_marker_repairs": [
+    "000002",
+    "000106",
+    "000168",
+    "000291",
+    "000457",
+    "000565",
+    "000599",
+    "000640",
+    "000796",
+    "000815",
+    "part2_001825",
+    "000003",
+    "000006",
+    "000007",
+    "000011",
+    "000061",
+    "000068",
+    "000091",
+    "000113",
+    "000153",
+    "000158",
+    "000173",
+    "000177",
+    "000184",
+    "000226",
+    "000267",
+    "000268",
+    "000274",
+    "000284",
+    "000290",
+    "000320",
+    "000393",
+    "000397",
+    "000433",
+    "000458",
+    "000512",
+    "000514",
+    "000528",
+    "000548",
+    "000601",
+    "000686",
+    "000687",
+    "000734",
+    "000738",
+    "000797",
+    "000798",
+    "000799",
+    "000820",
+    "000827",
+    "000909",
+    "000964",
+    "000985",
+    "001042",
+    "001046",
+    "001150",
+    "001354",
+    "001358",
+    "001386",
+    "001387",
+    "part2_000609",
+    "part2_000878",
+    "part2_001057",
+    "part2_001363",
+    "part2_001696"
+  ],
+  "duplicates_removed": [
+    {
+      "removed": "PartB_02316",
+      "kept": "PartB_00933"
+    },
+    {
+      "removed": "part2_001326",
+      "kept": "part2_001283"
+    },
+    {
+      "removed": "part2_002031",
+      "kept": "part2_000275"
+    },
+    {
+      "removed": "001368",
+      "kept": "000245"
+    },
+    {
+      "removed": "PartB_00804",
+      "kept": "PartB_01909"
+    },
+    {
+      "removed": "PartB_00982",
+      "kept": "PartB_00046"
+    },
+    {
+      "removed": "PartB_00983",
+      "kept": "PartB_00062"
+    },
+    {
+      "removed": "PartB_01300",
+      "kept": "PartB_01003"
+    },
+    {
+      "removed": "PartB_01815",
+      "kept": "PartB_01021"
+    },
+    {
+      "removed": "PartB_01856",
+      "kept": "PartB_00350"
+    },
+    {
+      "removed": "PartB_01914",
+      "kept": "PartB_01111"
+    },
+    {
+      "removed": "PartB_02132",
+      "kept": "PartB_02001"
+    },
+    {
+      "removed": "PartB_02135",
+      "kept": "PartB_00317"
+    },
+    {
+      "removed": "PartB_02219",
+      "kept": "PartB_00934"
+    },
+    {
+      "removed": "PartB_02240",
+      "kept": "PartB_01945"
+    },
+    {
+      "removed": "part2_000080",
+      "kept": "part2_000261"
+    },
+    {
+      "removed": "part2_000273",
+      "kept": "part2_000111"
+    },
+    {
+      "removed": "part2_000311",
+      "kept": "part2_000506"
+    },
+    {
+      "removed": "part2_000314",
+      "kept": "part2_000049"
+    },
+    {
+      "removed": "part2_000360",
+      "kept": "part2_000312"
+    },
+    {
+      "removed": "part2_000406",
+      "kept": "part2_000377"
+    },
+    {
+      "removed": "part2_000615",
+      "kept": "part2_000146"
+    },
+    {
+      "removed": "part2_000622",
+      "kept": "part2_000029"
+    },
+    {
+      "removed": "part2_000768",
+      "kept": "part2_000677"
+    },
+    {
+      "removed": "part2_000855",
+      "kept": "part2_000250"
+    },
+    {
+      "removed": "part2_000927",
+      "kept": "part2_001069"
+    },
+    {
+      "removed": "part2_001028",
+      "kept": "part2_000910"
+    },
+    {
+      "removed": "part2_001038",
+      "kept": "part2_000166"
+    },
+    {
+      "removed": "part2_001068",
+      "kept": "part2_000959"
+    },
+    {
+      "removed": "part2_001386",
+      "kept": "part2_001836"
+    },
+    {
+      "removed": "part2_001390",
+      "kept": "part2_001189"
+    },
+    {
+      "removed": "part2_001427",
+      "kept": "part2_000864"
+    },
+    {
+      "removed": "part2_001438",
+      "kept": "part2_001462"
+    },
+    {
+      "removed": "part2_001601",
+      "kept": "part2_001568"
+    },
+    {
+      "removed": "part2_001638",
+      "kept": "part2_001323"
+    },
+    {
+      "removed": "part2_001976",
+      "kept": "part2_001726"
+    },
+    {
+      "removed": "part2_002088",
+      "kept": "part2_002063"
+    },
+    {
+      "removed": "part2_002187",
+      "kept": "part2_000147"
+    },
+    {
+      "removed": "part2_002299",
+      "kept": "part2_002305"
+    }
+  ],
+  "clipped_boxes": 0,
+  "mapping": {
+    "hat": "0: helmet",
+    "person (bare head)": "1: no_helmet"
+  },
+  "profiles": {
+    "full": {
+      "train": {
+        "images": 4822,
+        "helmet_boxes": 5717,
+        "no_helmet_boxes": 71063
+      },
+      "val": {
+        "images": 1205,
+        "helmet_boxes": 1389,
+        "no_helmet_boxes": 17680
+      },
+      "test": {
+        "images": 1514,
+        "helmet_boxes": 1876,
+        "no_helmet_boxes": 22538
+      }
+    },
+    "m1": {
+      "train": {
+        "images": 2000,
+        "helmet_boxes": 2729,
+        "no_helmet_boxes": 25646
+      },
+      "val": {
+        "images": 400,
+        "helmet_boxes": 557,
+        "no_helmet_boxes": 4818
+      },
+      "test": {
+        "images": 1514,
+        "helmet_boxes": 1876,
+        "no_helmet_boxes": 22538
+      }
+    }
+  }
+}

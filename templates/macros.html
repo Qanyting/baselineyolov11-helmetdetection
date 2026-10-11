@@ -1,0 +1,31 @@
+{% macro icon(name, class_name='') -%}
+<svg class="icon {{ class_name }}" aria-hidden="true"><use href="#icon-{{ name }}"></use></svg>
+{%- endmacro %}
+
+{% macro records_table(records) -%}
+<div class="table-scroll"><table class="records-table">
+  <thead><tr><th>检测文件</th><th>类型</th><th>检测目标</th><th>检测时间</th><th>状态</th><th><span class="sr-only">操作</span></th></tr></thead>
+  <tbody>{% for record in records %}<tr>
+    <td><a class="file-cell" href="{{ url_for('history.detail', record_id=record.id) }}">{% if record.is_video %}<span class="file-thumbnail video-thumb">{{ icon('video') }}</span>{% else %}<img class="file-thumbnail" src="{{ url_for('history.media', record_id=record.id, variant='result') }}" alt="" loading="lazy">{% endif %}<span class="filename">{{ record.original_filename }}<small>{{ '%.2f'|format(record.processing_time) }} 秒处理完成</small></span></a></td>
+    <td><span class="type-pill">{{ '视频' if record.is_video else '图片' }}</span></td>
+    <td><strong>{{ record.total_objects }}</strong>{% if record.is_video %}<small class="cell-note">逐帧累计</small>{% endif %}</td>
+    <td class="time-cell">{{ record.created_at|localtime }}</td>
+    <td><span class="status"><i></i>已完成</span></td>
+    <td><a class="table-link" href="{{ url_for('history.detail', record_id=record.id) }}">查看{{ icon('chevron') }}</a></td>
+  </tr>{% endfor %}</tbody>
+</table></div>
+{%- endmacro %}
+
+{% macro helmet_art() -%}
+<svg class="helmet-art" viewBox="0 0 360 270" fill="none" aria-hidden="true">
+  <path d="M44 42h23M44 42v23M316 42h-23M316 42v23M44 228h23M44 228v-23M316 228h-23M316 228v-23" stroke="#5C9390" stroke-width="2"/>
+  <path d="M44 100h272M44 150h272M44 200h272M95 42v186M150 42v186M205 42v186M260 42v186" stroke="#DCE8E5"/>
+  <ellipse cx="180" cy="210" rx="88" ry="9" fill="#D4E2DE"/>
+  <path d="M104 168c0-47 25-81 65-87h22c40 6 65 40 65 87" fill="#ECD591" stroke="#B9A576" stroke-width="2"/>
+  <path d="M167 153V83c0-8 26-8 26 0v70" fill="#F7E8B7" stroke="#B9A576" stroke-width="2"/>
+  <path d="M125 132l-7 24M235 132l7 24" stroke="#B9A576" stroke-width="4" stroke-linecap="round"/>
+  <path d="M98 166h164c10 0 17 8 12 18-4 8-24 11-94 11s-90-3-94-11c-5-10 2-18 12-18Z" fill="#F0D994" stroke="#B9A576" stroke-width="2"/>
+  <rect x="76" y="64" width="208" height="146" rx="3" stroke="#45817C" stroke-width="2"/>
+  <path d="M77 73v-9h9M275 64h9v9M77 201v9h9M275 210h9v-9" stroke="#216A67" stroke-width="4"/>
+</svg>
+{%- endmacro %}

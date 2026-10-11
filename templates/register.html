@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}创建账户{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <span class="auth-small-brand">Helmet Lab / 开始使用</span>
+  <h1>创建你的账户</h1><p class="muted">上传文件和检测记录仅对你可见。</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="username">用户名</label><input id="username" name="username" value="{{ username }}" autocomplete="username" required minlength="3" maxlength="32" autofocus><small class="field-hint">3–32 个中文、字母、数字、下划线或短横线</small>
+    <label for="password">密码</label><input id="password" name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128"><small class="field-hint">至少 8 个字符</small>
+    <label for="confirm_password">确认密码</label><input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required minlength="8" maxlength="128">
+    <button type="submit" class="button primary full">创建账户</button>
+  </form>
+  <p class="auth-switch">已有账户？<a href="{{ url_for('auth.login') }}">返回登录</a></p>
+</section>
+{% endblock %}
